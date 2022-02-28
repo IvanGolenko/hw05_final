@@ -248,7 +248,8 @@ class PostPagesTests(TestCase):
         for path in paths:
             with self.subTest(path=path):
                 response = self.authorized_client.get(path)
-                self.assertEqual(response.context['page_obj'][0].image, self.post.image)
+                self.assertEqual(response.context['page_obj'][0].image,
+                    self.post.image)
 
         response_post_detail = self.authorized_client.get(
             reverse('posts:post_detail', kwargs={
@@ -261,7 +262,7 @@ class PostPagesTests(TestCase):
         self.assertIsInstance(post_image_detail, ImageFieldFile)
 
     def test_authorized_client_can_create_comments(self):
-        """Тестируем, что комментарировать может только 
+        """Тестируем, что комментарировать может только
             авторизованный пользователь"""
         post = Post.objects.create(
             text='Тестовый пост',
