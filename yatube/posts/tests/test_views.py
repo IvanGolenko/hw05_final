@@ -249,8 +249,7 @@ class PostPagesTests(TestCase):
             with self.subTest(path=path):
                 response = self.authorized_client.get(path)
                 self.assertEqual(response.context['page_obj'][0].image,
-                    self.post.image
-                )
+                    self.post.image)
 
         response_post_detail = self.authorized_client.get(
             reverse('posts:post_detail', kwargs={
