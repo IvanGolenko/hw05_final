@@ -33,7 +33,6 @@ def group_posts(request, slug):
     }
     return render(request, 'posts/group_list.html', context)
 
-
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.all()
@@ -41,11 +40,10 @@ def profile(request, username):
     paginator = Paginator(posts, NUM_OF_OBJ)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user, author=author).exists()
-    else:
-        following = False
+
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user, author=author).exists()
+
     context = {
         'author': author,
         'page_obj': page_obj,
@@ -54,12 +52,11 @@ def profile(request, username):
     }
     return render(request, 'posts/profile.html', context)
 
-
 def post_detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, id=post_id)
     author = post.author
     sum_of_posts = author.posts.count()
-    form = CommentForm(request.POST or None)
+    form = CommentForm()
     comments = post.comments.all()
     context = {
         'post': post,

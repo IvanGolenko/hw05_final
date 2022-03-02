@@ -1,6 +1,9 @@
+import tempfile
+
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
 from ..forms import PostForm
@@ -8,7 +11,10 @@ from ..models import Group, Post
 
 User = get_user_model()
 
+# Создаем временную папку для медиа-файлов;
+TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
+@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class TaskCreateFormTests(TestCase):
     @classmethod
     def setUpClass(cls):
