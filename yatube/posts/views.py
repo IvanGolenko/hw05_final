@@ -33,6 +33,7 @@ def group_posts(request, slug):
     }
     return render(request, 'posts/group_list.html', context)
 
+
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.all()
@@ -51,6 +52,7 @@ def profile(request, username):
         'following': following,
     }
     return render(request, 'posts/profile.html', context)
+
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)

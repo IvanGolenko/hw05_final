@@ -6,7 +6,8 @@ from django.shortcuts import render
 def page_not_found(request, exception):
     # Переменная exception содержит отладочную информацию;
     # выводить её в шаблон пользовательской страницы 404 мы не станем
-    return render(request, 'core/404.html', {'path': request.path}, status=HTTPStatus.NOT_FOUND)
+    return render(request, 'core/404.html',
+        {'path': request.path}, status=HTTPStatus.NOT_FOUND)
 
 
 def csrf_failure(request, reason=''):
@@ -18,4 +19,5 @@ def permission_denied_view(request, exception):
 
 
 def server_eror(request):
-    return render(request, 'core/500.html', status=HTTPStatus.INTERNAL_SERVER_ERROR)
+    return render(request, 'core/500.html',
+        status=HTTPStatus.INTERNAL_SERVER_ERROR)
